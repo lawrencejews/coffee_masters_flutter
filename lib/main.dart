@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:coffee_masters/offerspage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,7 +30,6 @@ class _GreetState extends State<Greet> {
 
   @override
   Widget build(BuildContext context) {
-    
     var greetStyle = const TextStyle(fontSize: 24);
 
     return Column(
@@ -59,33 +61,65 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Coffee Masters',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.brown,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 // HomePage Widgets
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    Widget currentWidgetPage = const Text("data");
+
+    switch (selectedIndex) {
+      case 0:
+        currentWidgetPage = const Text("Menu Page");
+        break;
+      case 1:
+        currentWidgetPage = const OfferPage();
+        break;
+      case 2:
+        currentWidgetPage = const Text("Orders Page");
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Image.asset("images/logo.png"),
       ),
-      body: Greet(),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: selectedIndex,
+          onTap: (newIndex) {
+            setState(() {
+              selectedIndex = newIndex; //changing the state
+            });
+          },
+          backgroundColor: Theme.of(context).primaryColor,
+          selectedItemColor: Colors.yellow.shade400,
+          unselectedItemColor: Colors.brown.shade50,
+          items: const [
+            BottomNavigationBarItem(label: "Menu", icon: Icon(Icons.coffee)),
+            BottomNavigationBarItem(
+                label: "Offers", icon: Icon(Icons.local_offer)),
+            BottomNavigationBarItem(
+              label: "Menu",
+              icon: Icon(Icons.shopping_cart_checkout_outlined),
+            ),
+          ]),
+      body: currentWidgetPage,
     );
   }
 }
