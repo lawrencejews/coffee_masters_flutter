@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:coffee_masters/datamanager.dart';
 import 'package:coffee_masters/pages/menupage.dart';
 import 'package:coffee_masters/pages/offerspage.dart';
 import 'package:coffee_masters/pages/orderpage.dart';
@@ -8,15 +9,6 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
 }
-
-// class HelloWorld extends StatelessWidget {
-//   const HelloWorld({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Text("HelloWorld");
-//   }
-// }
 
 class Greet extends StatefulWidget {
   const Greet({Key? key}) : super(key: key);
@@ -81,6 +73,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var dataManager = DataManager(); // shared data btn two pages.
   var selectedIndex = 0;
 
   @override
@@ -89,13 +82,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
     switch (selectedIndex) {
       case 0:
-        currentWidgetPage = const MenuPage();
+        currentWidgetPage = MenuPage(
+          dataManager: dataManager,
+        );
         break;
       case 1:
         currentWidgetPage = const OfferPage();
         break;
       case 2:
-        currentWidgetPage = const OrderPage();
+        currentWidgetPage = OrderPage(
+          dataManager: dataManager,
+        );
+        break;
     }
 
     return Scaffold(
@@ -117,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
             BottomNavigationBarItem(
                 label: "Offers", icon: Icon(Icons.local_offer)),
             BottomNavigationBarItem(
-              label: "Menu",
+              label: "Order",
               icon: Icon(Icons.shopping_cart_checkout_outlined),
             ),
           ]),

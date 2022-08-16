@@ -13,6 +13,16 @@ class Product {
       required this.name,
       required this.price,
       required this.image});
+    
+    // Factory Constructor
+    factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+        id: json['id'] as int,
+        name: json['name'] as String,
+        price: json['price'] as double,
+        image: json['image'] as String);
+  }
+
 }
 
 class Category {
@@ -20,6 +30,14 @@ class Category {
   List<Product> products;
 
   Category({required this.name, required this.products});
+
+  // Factory Constructor
+  factory Category.fromJson(Map<String, dynamic> json) {
+    var productsJson = json['products'] as Iterable<dynamic>;
+    var products = productsJson.map((p) => Product.fromJson(p)).toList();
+    return Category(name: json['name'] as String, products: products);
+  }
+
 }
 
 class ItemInCart {

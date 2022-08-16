@@ -10,4 +10,5 @@
 - Build: intermediary files.
 - Lib: LOCATION OF YOUR SOURCE CODE.
 - The pubspec.yaml is the configuration file for the project.
+![CoffeeMasters!](CoffeeMasters-Flutter.png)
 
